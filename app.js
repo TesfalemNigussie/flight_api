@@ -25,12 +25,13 @@ const mockFlights = [
 app.get('/api/flights', (req, res) => {
   let flights = [...mockFlights];
   
-  const { from, to, carrier, maxPrice } = req.query;
+  const { from, to, carrier, maxPrice, date } = req.query;
   
   if (from) flights = flights.filter(f => f.from.toLowerCase() === from.toLowerCase());
   if (to) flights = flights.filter(f => f.to.toLowerCase() === to.toLowerCase());
   if (carrier) flights = flights.filter(f => f.carrierCode.toLowerCase() === carrier.toLowerCase());
   if (maxPrice) flights = flights.filter(f => f.price <= parseInt(maxPrice));
+  if (date) flights = flights.filter(f => f.date === date);
   
   if (flights.length === 0) {
     return res.json({ message: "No flights found", flights: [] });
